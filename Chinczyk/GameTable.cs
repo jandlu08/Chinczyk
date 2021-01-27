@@ -35,11 +35,12 @@ namespace Chinczyk
         readonly Bitmap[][] _xBitmap = new Bitmap[16][];
 
         int _order, _playerNumber;
-        bool _startStop = true;
+        private Cube cube = new Cube();
+        
 
         int locX0 = 27, locY0 = 30, locX1 = 195, locY1 = 30, locX2 = 27, locY2 = 195, locX3 = 195, locY3 = 195;
 
-        readonly SoundPlayer _cubeRollSoundPlayer = new SoundPlayer();
+        
         readonly SoundPlayer _moveSoundPlayer = new SoundPlayer();
         readonly SoundPlayer _killPawnSoundPlayer = new SoundPlayer();
         readonly SoundPlayer _parkSoundPlayer = new SoundPlayer();
@@ -47,8 +48,20 @@ namespace Chinczyk
         readonly SoundPlayer _victorySoundPlayer = new SoundPlayer();
 
         readonly ResourceManager _locRm = LanguageSelect.LocRm;
+        
+        private void timerCubeRoll_Tick(object sender, EventArgs e)
+        {
+            if (_order == 0)
+                _player1.CubeRoll(pictureBoxCube, _cubeImg);
+            else if (_order == 1)
+                _player2.CubeRoll(pictureBoxCube, _cubeImg);
+            else if (_order == 2)
+                _player3.CubeRoll(pictureBoxCube, _cubeImg);
+            else
+                _player4.CubeRoll(pictureBoxCube, _cubeImg);
+        }
 
-        private void Tabla_Load(object sender, EventArgs e)
+        private void Table_Load(object sender, EventArgs e)
         {
             _player1 = new Player();
             _player2 = new Player();
@@ -161,7 +174,7 @@ namespace Chinczyk
 
             SetPawn(ConfigureGame.Figure);
 
-            _cubeRollSoundPlayer.Stream = Properties.Resources.rollCube;
+            Cube.CubeRollSoundPlayer.Stream = Properties.Resources.rollCube;
             _moveSoundPlayer.Stream = Properties.Resources.tap;
             _killPawnSoundPlayer.Stream = Properties.Resources.insertPawn;
             _parkSoundPlayer.Stream = Properties.Resources.migmigParking;
@@ -189,37 +202,11 @@ namespace Chinczyk
             this.Text = _locRm.GetString("pNazivForme");
         }
 
-        public void CubeRoll()
-        {
-            if (_startStop)
-            {
-                _startStop = false;
-                timerCubeRoll.Start();
-                _cubeRollSoundPlayer.PlayLooping();
-            }
-            else
-            {
-                _startStop = true;
-                timerCubeRoll.Stop();
-                _cubeRollSoundPlayer.Stop();
-            }
-        }
-
-        private void timerCubeRoll_Tick(object sender, EventArgs e)
-        {
-            if (_order == 0)
-                _player1.CubeRoll(pictureBoxCube, _cubeImg);
-            else if (_order == 1)
-                _player2.CubeRoll(pictureBoxCube, _cubeImg);
-            else if (_order == 2)
-                _player3.CubeRoll(pictureBoxCube, _cubeImg);
-            else
-                _player4.CubeRoll(pictureBoxCube, _cubeImg);
-        }
+        
 
         private void pictureBoxCube_Click(object sender, EventArgs e)
         {
-            CubeRoll();
+            cube.CubeRoll(timerCubeRoll);
 
             if (_order == 0 && timerCubeRoll.Enabled == false)
                 EnableDisableButtons(_player1, _buttonPlayer1, _buttonPlayer2, _buttonPlayer3, _buttonPlayer4, 'R');
@@ -977,7 +964,7 @@ namespace Chinczyk
 
         private void GameTable_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _cubeRollSoundPlayer.Stop();
+            Cube.CubeRollSoundPlayer.Stop();
             Dispose();
         }
     }

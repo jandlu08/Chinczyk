@@ -53,6 +53,7 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cube.cs" />
     <Compile Include="Language-de-DE.Designer.cs">
       <DependentUpon>Language-de-DE.resx</DependentUpon>
       <AutoGen>True</AutoGen>

@@ -832,7 +832,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameTable_FormClosing);
-            this.Load += new System.EventHandler(this.Tabla_Load);
+            this.Load += new System.EventHandler(this.Table_Load);
             this.panelCubeEnabDisab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCube)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLeft)).EndInit();

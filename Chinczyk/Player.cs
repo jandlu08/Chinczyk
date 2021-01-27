@@ -63,5 +63,7 @@ namespace Chinczyk
             _cubeNumber = _random.Next(1, 7);
             pictBox.Image = image6[_cubeNumber];
         }
+        
+        
     }
 }
